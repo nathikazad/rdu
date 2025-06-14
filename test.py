@@ -27,9 +27,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-
-
-st.title('Uber pickups in NYC')
+st.title("Signup Analysis Dashboard")
 
 DATE_COLUMN = 'date/time'
 DATA_URL = ('https://s3-us-west-2.amazonaws.com/'
@@ -43,6 +41,11 @@ def load_data(nrows):
     lowercase = lambda x: str(x).lower()
     data.rename(lowercase, axis='columns', inplace=True)
     data[DATE_COLUMN] = pd.to_datetime(data[DATE_COLUMN])
+    return data
+
+# Read the CSV file
+@st.cache_data
+def load_data2():
     print("Starting to load data...")
     # Read CSV without header and assign column names
     df = pd.read_csv('signers.csv', header=None, 
@@ -70,14 +73,18 @@ def load_data(nrows):
     
     # Extract month and year
     df['month_year'] = df['signup_date'].dt.to_period('M')
-    # return df
-    return data
+    return df
 
 st.text('yikes markdown signers.csv loaded successfully with length: ' + str(len(data2)))
 
 data_load_state = st.text('Loading data...')
 data = load_data(10000)
 data_load_state.text("Done! (using st.cache_data)")
+
+print("About to load data...")
+df = load_data2()
+print("Data loaded successfully!")
+
 
 if st.checkbox('Show raw data'):
     st.subheader('Raw data')
