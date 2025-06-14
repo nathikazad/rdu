@@ -107,3 +107,50 @@ df_plotly = pd.DataFrame({
 })
 fig = px.line(df_plotly, x='x', y='y', title='Simple Plotly Line Chart')
 st.plotly_chart(fig)
+
+
+
+
+
+
+
+
+
+
+
+organizations = ['All Organizations'] + sorted(df['organization'].unique().tolist())
+selected_org = st.selectbox('Select Organization', organizations)
+
+# Filter data based on selected organization
+if selected_org != 'All Organizations':
+    filtered_df = df[df['organization'] == selected_org]
+else:
+    filtered_df = df
+
+# View Type Toggle (now in scroll area)
+st.write("")  # Spacer for visual separation
+view_type = st.radio("Select View Type", ["Regular", "Cumulative"], horizontal=True)
+
+# Monthly signups chart
+monthly_signups = filtered_df.groupby('month_year').size().reset_index(name='count')
+monthly_signups['month_year'] = monthly_signups['month_year'].astype(str)
+
+if view_type == "Cumulative":
+    monthly_signups['count'] = monthly_signups['count'].cumsum()
+    title_suffix = "Cumulative"
+else:
+    title_suffix = "Monthly"
+
+fig = px.line(monthly_signups, 
+              x='month_year', 
+              y='count',
+              title=f'{title_suffix} Signups Over Time - {selected_org}',
+              labels={'month_year': 'Month', 'count': 'Number of Signups'})
+
+fig.update_layout(
+    xaxis_title="Month",
+    yaxis_title="Number of Signups",
+    hovermode='x unified'
+)
+
+st.plotly_chart(fig, use_container_width=True)
