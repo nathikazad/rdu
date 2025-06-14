@@ -85,38 +85,6 @@ print("Data loaded successfully!")
 st.text('signers.csv loaded successfully with length: ' + str(len(df)))
 
 
-if st.checkbox('Show raw data'):
-    st.subheader('Raw data')
-    st.write(data)
-
-st.subheader('Number of pickups by hour')
-hist_values = np.histogram(data[DATE_COLUMN].dt.hour, bins=24, range=(0,24))[0]
-st.bar_chart(hist_values)
-
-# Some number in the range 0-23
-hour_to_filter = st.slider('hour', 0, 23, 17)
-filtered_data = data[data[DATE_COLUMN].dt.hour == hour_to_filter]
-
-st.subheader('Map of all pickups at %s:00' % hour_to_filter)
-st.map(filtered_data)
-
-# Add a simple Plotly chart
-df_plotly = pd.DataFrame({
-    'x': np.arange(10),
-    'y': np.random.randint(1, 20, 10)
-})
-fig = px.line(df_plotly, x='x', y='y', title='Simple Plotly Line Chart')
-st.plotly_chart(fig)
-
-
-
-
-
-
-
-
-
-
 
 organizations = ['All Organizations'] + sorted(df['organization'].unique().tolist())
 selected_org = st.selectbox('Select Organization', organizations)
