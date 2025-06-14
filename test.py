@@ -13,19 +13,13 @@ st.set_page_config(page_title="Signup Analysis", layout="wide")
 # Add custom CSS for sticky header (dark theme compatible)
 st.markdown("""
     <style>
-        div[data-testid="stVerticalBlock"] > div:has(div.stSelectbox),
-        div[data-testid="stVerticalBlock"] > div:has(div.stRadio),
-        div[data-testid="stVerticalBlock"] > div:has(div.stMetric),
-        div[data-testid="stVerticalBlock"] > div:has(div.stSubheader) {
+        div[data-testid="stVerticalBlock"] > div:has(div.stSelectbox) {
             position: sticky;
             top: 0;
             background-color: #0e1117; /* Streamlit dark theme background */
             z-index: 999;
             padding: 1rem 0;
             border-bottom: 1px solid #333;
-            will-change: transform;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
         }
         .stSelectbox {
             background-color: #262730 !important;
@@ -34,13 +28,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("Signup Analysis Dashboard")
-
-DATE_COLUMN = 'date/time'
-DATA_URL = ('https://s3-us-west-2.amazonaws.com/'
-            'streamlit-demo-data/uber-raw-data-sep14.csv.gz')
-data2 = pd.read_csv('signers.csv')
-
-
 
 # Read the CSV file
 @st.cache_data
