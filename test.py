@@ -8,6 +8,8 @@ st.title('Uber pickups in NYC')
 DATE_COLUMN = 'date/time'
 DATA_URL = ('https://s3-us-west-2.amazonaws.com/'
             'streamlit-demo-data/uber-raw-data-sep14.csv.gz')
+data = pd.read_csv('signers.csv')
+
 
 @st.cache_data
 def load_data(nrows):
@@ -16,6 +18,8 @@ def load_data(nrows):
     data.rename(lowercase, axis='columns', inplace=True)
     data[DATE_COLUMN] = pd.to_datetime(data[DATE_COLUMN])
     return data
+
+st.text('signers.csv loaded successfully with length: ' + str(len(data)))
 
 data_load_state = st.text('Loading data...')
 data = load_data(10000)
