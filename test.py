@@ -43,9 +43,37 @@ def load_data(nrows):
     lowercase = lambda x: str(x).lower()
     data.rename(lowercase, axis='columns', inplace=True)
     data[DATE_COLUMN] = pd.to_datetime(data[DATE_COLUMN])
+    print("Starting to load data...")
+    # Read CSV without header and assign column names
+    df = pd.read_csv('signers.csv', header=None, 
+                     names=['id', 'status', 'organization', 'language', 'zipcode', 'signup_date'])
+    
+    print("CSV loaded. First few rows:")
+    print(df.head())
+    print("\nColumn names:", df.columns.tolist())
+    
+    # Filter out rows where signup_date doesn't match the expected format
+    def is_valid_date(date_str):
+        try:
+            pd.to_datetime(date_str, format='%m/%d/%Y %H:%M')
+            return True
+        except:
+            return False
+    
+    # Filter the dataframe
+    df = df[df['signup_date'].apply(is_valid_date)]
+    print(f"\nFiltered out {len(df)} valid rows")
+    
+    # Convert signup_date to datetime with explicit format
+    df['signup_date'] = pd.to_datetime(df['signup_date'], format='%m/%d/%Y %H:%M')
+    print("\nSuccessfully converted dates")
+    
+    # Extract month and year
+    df['month_year'] = df['signup_date'].dt.to_period('M')
+    # return df
     return data
 
-st.text('markdown signers.csv loaded successfully with length: ' + str(len(data2)))
+st.text('yikes markdown signers.csv loaded successfully with length: ' + str(len(data2)))
 
 data_load_state = st.text('Loading data...')
 data = load_data(10000)
