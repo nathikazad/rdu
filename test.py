@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import plotly.express as px
 
 st.title('Uber pickups in NYC')
 
@@ -34,3 +35,11 @@ filtered_data = data[data[DATE_COLUMN].dt.hour == hour_to_filter]
 
 st.subheader('Map of all pickups at %s:00' % hour_to_filter)
 st.map(filtered_data)
+
+# Add a simple Plotly chart
+df_plotly = pd.DataFrame({
+    'x': np.arange(10),
+    'y': np.random.randint(1, 20, 10)
+})
+fig = px.line(df_plotly, x='x', y='y', title='Simple Plotly Line Chart')
+st.plotly_chart(fig)
