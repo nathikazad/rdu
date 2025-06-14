@@ -67,7 +67,7 @@ st.text('signers.csv loaded successfully with length: ' + str(len(df)))
 
 
 organizations = ['All Organizations'] + sorted(df['organization'].unique().tolist())
-selected_org = st.selectbox('Select Organization', organizations)
+selected_org = st.selectbox('', organizations)
 
 # Filter data based on selected organization
 if selected_org != 'All Organizations':
