@@ -120,18 +120,12 @@ st.subheader("Assessment Status Analysis")
 status_counts = filtered_df['status'].value_counts().reset_index()
 status_counts.columns = ['Status', 'Count']
 
-if view_type == "Cumulative":
-    status_counts['Count'] = status_counts['Count'].cumsum()
-    title_suffix = "Cumulative"
-else:
-    title_suffix = "Distribution of"
-
 # Create a bar chart for status distribution with labels on top of bars
 fig_status = px.bar(status_counts, 
                     x='Status', 
                     y='Count',
                     text='Count',
-                    title=f'{title_suffix} Assessment Statuses - {selected_org}',
+                    title=f'Distribution of Assessment Statuses - {selected_org}',
                     labels={'Status': 'Assessment Status', 'Count': 'Number of Signups'})
 
 fig_status.update_traces(textposition='outside')
