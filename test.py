@@ -3,6 +3,32 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+from datetime import datetime
+# Set page config
+st.set_page_config(page_title="Signup Analysis", layout="wide")
+
+# Add custom CSS for sticky header (dark theme compatible)
+st.markdown("""
+    <style>
+        div[data-testid="stVerticalBlock"] > div:has(div.stSelectbox) {
+            position: sticky;
+            top: 0;
+            background-color: #0e1117; /* Streamlit dark theme background */
+            z-index: 999;
+            padding: 1rem 0;
+            border-bottom: 1px solid #333;
+        }
+        .stSelectbox {
+            background-color: #262730 !important;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+
+
 st.title('Uber pickups in NYC')
 
 DATE_COLUMN = 'date/time'
@@ -19,7 +45,7 @@ def load_data(nrows):
     data[DATE_COLUMN] = pd.to_datetime(data[DATE_COLUMN])
     return data
 
-st.text('signers.csv loaded successfully with length: ' + str(len(data)))
+st.text('markdown signers.csv loaded successfully with length: ' + str(len(data)))
 
 data_load_state = st.text('Loading data...')
 data = load_data(10000)
