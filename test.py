@@ -75,8 +75,6 @@ def load_data2():
     df['month_year'] = df['signup_date'].dt.to_period('M')
     return df
 
-st.text('yikes markdown signers.csv loaded successfully with length: ' + str(len(data2)))
-
 data_load_state = st.text('Loading data...')
 data = load_data(10000)
 data_load_state.text("Done! (using st.cache_data)")
@@ -84,6 +82,7 @@ data_load_state.text("Done! (using st.cache_data)")
 print("About to load data...")
 df = load_data2()
 print("Data loaded successfully!")
+st.text('signers.csv loaded successfully with length: ' + str(len(df)))
 
 
 if st.checkbox('Show raw data'):
