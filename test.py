@@ -15,7 +15,7 @@ st.markdown("""
     <style>
         div[data-testid="stVerticalBlock"] > div:has(div.stSelectbox) {
             position: sticky;
-            top: 3.5rem;  /* Adjusted to account for Streamlit's top nav bar */
+            top: 1.5rem;  /* Adjusted to account for Streamlit's top nav bar */
             background-color: #0e1117; /* Streamlit dark theme background */
             z-index: 999;
             padding: 1rem 0;
