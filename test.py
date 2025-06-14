@@ -68,9 +68,7 @@ def load_data2():
     df['month_year'] = df['signup_date'].dt.to_period('M')
     return df
 
-data_load_state = st.text('Loading data...')
 df = load_data2()
-print("Data loaded successfully!")
 st.text('signers.csv loaded successfully with length: ' + str(len(df)))
 
 
